@@ -3,6 +3,7 @@ package com.github.erdanielli.planner.rest;
 import com.github.erdanielli.planner.rest.dto.CreateTripRequest;
 import com.github.erdanielli.planner.rest.dto.CreateTripResponse;
 import com.github.erdanielli.planner.rest.dto.TripDetails;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class TripController {
     private final Map<UUID, CreateTripRequest> fakeTrips = new HashMap<>();
 
     @PostMapping
-    public CreateTripResponse createTrip(@RequestBody CreateTripRequest request) {
+    public CreateTripResponse createTrip(@RequestBody @Valid CreateTripRequest request) {
         var id = UUID.randomUUID();
         fakeTrips.put(id, request);
         return new CreateTripResponse(id);
