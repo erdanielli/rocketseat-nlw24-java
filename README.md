@@ -12,4 +12,7 @@
         - passou despercebido, mas Trip não retorna o mesmo JSON que TripRequestPayload
         - ótima oportunidade para mostrar @JsonUnwrapped (TripDetails)
 3. _(sugestão)_ Aproveitando o foco na API REST, aplicar validação em CreateTripRequest.
-    - Talvez eu esteja me adiantando caso esteja nas próximas aulas
+    - talvez eu esteja me adiantando caso esteja nas próximas aulas
+4. _(sugestão)_ Modelar a camada de negócios com [Data-Oriented Programming](https://www.youtube.com/watch?v=zn4neparqUQ)
+   - isso permitiria deixar o banco de dados pro final (concordo que isso pode diminuir o engajamento com o público mais "afoito")
+   - ao invés de criar ParticipantService#registerParticipantsToEvent, implementar essa funcionalidade (futuramente) como decorator de TripRepository 
