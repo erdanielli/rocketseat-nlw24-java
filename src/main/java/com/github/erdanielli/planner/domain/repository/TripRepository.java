@@ -24,4 +24,6 @@ public interface TripRepository {
     Optional<ConfirmedTrip> confirm(UUID id);
 
     Optional<ConfirmedTrip> confirmParticipant(UUID tripId, Participant participant);
+
+    Optional<Trip> invite(UUID id, String email);
 }

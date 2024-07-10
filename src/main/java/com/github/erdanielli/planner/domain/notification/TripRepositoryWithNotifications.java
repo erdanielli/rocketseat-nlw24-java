@@ -20,11 +20,33 @@ public record TripRepositoryWithNotifications(TripRepository delegate) implement
                 .map(this::triggerConfirmationEmailToParticipants);
     }
 
+    @Override
+    public Optional<Trip> invite(UUID id, String email) {
+        return delegate.invite(id, email)
+                .map(trip -> triggerConfirmationEmailToParticipant(trip, email));
+    }
+
     private ConfirmedTrip triggerConfirmationEmailToParticipants(ConfirmedTrip trip) {
         for (Invitation invitation : trip.invitations()) {
-            System.out.printf("[CONVITE_ENVIADO] trip=%s, email=%s%n", trip.id(), invitation.email());
+            sendNotification(trip.id(), invitation.email());
         }
         return trip;
+    }
+
+    private Trip triggerConfirmationEmailToParticipant(Trip trip, String email) {
+        if (trip instanceof ConfirmedTrip conf) {
+            for (Invitation invitation : conf.invitations()) {
+                if (invitation.email().equals(email)) {
+                    sendNotification(trip.id(), email);
+                    break;
+                }
+            }
+        }
+        return trip;
+    }
+
+    private void sendNotification(UUID tripId, String email) {
+        System.out.printf("[CONVITE_ENVIADO] trip=%s, email=%s%n", tripId, email);
     }
 
     // delegate simples, sem notificar
