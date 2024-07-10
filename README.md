@@ -30,4 +30,14 @@ conhecimentos ao mesmo tempo que passo meu feedback.
 Dessa forma ela não pode ser exposta diretamente pro Controller.
        - Implementar com fake p/ demonstrar que o banco de dados é só um detalhe (polêmico!)       
    - ao invés de criar ParticipantService#registerParticipantsToEvent, implementar essa funcionalidade (futuramente) 
-como [decorator](https://www.yegor256.com/2015/02/26/composable-decorators.html) de TripRepository (polêmico também!) 
+como [decorator](https://www.yegor256.com/2015/02/26/composable-decorators.html) de TripRepository (polêmico também!)
+
+### Aula 2
+
+1. Principais críticas:
+    - ficou evidente os perigos de fazer o design OO *depois* de modelar as tabelas;
+    - TripController com muita regra de negócio e muito código duplicado;
+    - ParticipantService como dublê de Repository e retornado DTO;
+2. Implementei a parte de notificação com Decorator: TripRepositoryWithNotifications;
+3. Persistência vou deixar pra próxima (e última) aula;
+4. TripRepository está ficando muito extenso. Refactor iminente.
