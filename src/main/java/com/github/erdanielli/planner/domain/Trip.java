@@ -4,7 +4,6 @@ import com.github.erdanielli.planner.domain.Invitation.UnconfirmedInvitation;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 public sealed interface Trip {
 
@@ -26,7 +25,7 @@ public sealed interface Trip {
             return new ConfirmedTrip(id, destination, duration, owner,
                     invitations.stream()
                             .map(UnconfirmedInvitation::new)
-                            .collect(Collectors.toList()));
+                            .toList());
         }
     }
 
@@ -34,7 +33,17 @@ public sealed interface Trip {
                          String destination,
                          TripDuration duration,
                          Participant owner,
-                         List<Invitation> invitations) implements Trip {
+                         List<? extends Invitation> invitations) implements Trip {
+
+        public ConfirmedTrip confirm(Participant participant) {
+            var v2 = invitations.stream().map(i -> {
+                if (i instanceof UnconfirmedInvitation unc && unc.email().equalsIgnoreCase(participant.email())) {
+                    return unc.confirm(participant.name());
+                }
+                return i;
+            }).toList();
+            return new ConfirmedTrip(id, destination, duration, owner, v2);
+        }
     }
 
 }

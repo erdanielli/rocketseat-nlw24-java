@@ -13,13 +13,15 @@ import java.util.UUID;
 public interface TripRepository {
 
     UnconfirmedTrip createNew(String destination,
-                                   TripDuration duration,
-                                   Participant owner,
-                                   List<String> invitations);
+                              TripDuration duration,
+                              Participant owner,
+                              List<String> invitations);
 
     Optional<Trip> findById(UUID id);
 
     Optional<UnconfirmedTrip> update(UUID id, String destination, TripDuration duration);
 
     Optional<ConfirmedTrip> confirm(UUID id);
+
+    Optional<ConfirmedTrip> confirmParticipant(UUID tripId, Participant participant);
 }

@@ -49,4 +49,15 @@ public record TripRepositoryFakeAdapter(Map<UUID, Trip> tripById) implements Tri
         });
         return Optional.ofNullable((ConfirmedTrip) updatedTrip);
     }
+
+    @Override
+    public Optional<ConfirmedTrip> confirmParticipant(UUID tripId, Participant participant) {
+        var updatedTrip = tripById.computeIfPresent(tripId, (_id, trip) -> {
+            if (trip instanceof ConfirmedTrip conf) {
+                return conf.confirm(participant);
+            }
+            return null;
+        });
+        return Optional.ofNullable((ConfirmedTrip) updatedTrip);
+    }
 }

@@ -46,4 +46,9 @@ public record TripRepositoryWithNotifications(TripRepository delegate) implement
     public Optional<UnconfirmedTrip> update(UUID id, String destination, TripDuration duration) {
         return delegate.update(id, destination, duration);
     }
+
+    @Override
+    public Optional<ConfirmedTrip> confirmParticipant(UUID tripId, Participant participant) {
+        return delegate.confirmParticipant(tripId, participant);
+    }
 }
