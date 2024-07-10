@@ -17,4 +17,5 @@ public interface TripRepository {
 
     Optional<Trip> findById(UUID id);
 
+    Optional<Trip.UnconfirmedTrip> update(UUID id, String destination, TripDuration duration);
 }

@@ -25,4 +25,15 @@ public final class TripRepositoryFakeAdapter implements TripRepository {
     public Optional<Trip> findById(UUID id) {
         return Optional.ofNullable(tripById.get(id));
     }
+
+    @Override
+    public Optional<Trip.UnconfirmedTrip> update(UUID id, String destination, TripDuration duration) {
+        var updatedTrip = tripById.computeIfPresent(id, (_id, trip) -> {
+            if (trip instanceof Trip.UnconfirmedTrip unc) {
+                return new Trip.UnconfirmedTrip(unc.id(), destination, duration, unc.owner(), unc.invitations());
+            }
+            return null;
+        });
+        return Optional.ofNullable((Trip.UnconfirmedTrip) updatedTrip);
+    }
 }
