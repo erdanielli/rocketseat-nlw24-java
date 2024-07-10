@@ -5,13 +5,13 @@ import com.github.erdanielli.planner.domain.Trip;
 import com.github.erdanielli.planner.domain.Trip.ConfirmedTrip;
 import com.github.erdanielli.planner.domain.Trip.UnconfirmedTrip;
 import com.github.erdanielli.planner.domain.TripDuration;
-import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 
-@Component
-public final class TripRepositoryFakeAdapter implements TripRepository {
-    private final Map<UUID, Trip> tripById = new HashMap<>();
+public record TripRepositoryFakeAdapter(Map<UUID, Trip> tripById) implements TripRepository {
 
     @Override
     public UnconfirmedTrip createNew(String destination,
