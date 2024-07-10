@@ -41,4 +41,12 @@ public record TripController(TripRepository tripRepository) {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    // operação não idempotente com GET
+    @RequestMapping(path = "{id}/confirm", method = {RequestMethod.PUT, RequestMethod.POST, RequestMethod.GET})
+    public ResponseEntity<TripDetails> confirmTrip(@PathVariable UUID id) {
+        return tripRepository.confirm(id)
+                .map(trip -> ResponseEntity.ok(TripDetails.from(trip)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
 }
